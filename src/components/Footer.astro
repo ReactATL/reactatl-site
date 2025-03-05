@@ -1,0 +1,110 @@
+---
+import { Image } from "astro:assets";
+import reactLogo from "../assets/logo.jpeg";
+const { classList = "p-4" } = Astro.props;
+---
+
+<footer class='body-font'>
+  <div
+    class='container px-5 py-5 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col'
+  >
+    <div
+      class='w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10'
+    >
+      <Image src={reactLogo} alt='React ATL Logo' class='rounded-2xl' />
+    </div>
+    <div
+      class='flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first'
+    >
+      <div class='lg:w-1/4 md:w-1/2 w-full px-4'>
+        <h2 class='title-font font-medium tracking-widest text-sm mb-3'>
+          CATEGORIES
+        </h2>
+        <nav class='list-none mb-10'>
+          <li>
+            <a class='anchor'>First Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Second Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Third Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Fourth Link</a>
+          </li>
+        </nav>
+      </div>
+      <div class='lg:w-1/4 md:w-1/2 w-full px-4'>
+        <h2 class='title-font font-medium tracking-widest text-sm mb-3'>
+          CATEGORIES
+        </h2>
+        <nav class='list-none mb-10'>
+          <li>
+            <a class='anchor'>First Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Second Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Third Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Fourth Link</a>
+          </li>
+        </nav>
+      </div>
+      <div class='lg:w-1/4 md:w-1/2 w-full px-4'>
+        <h2 class='title-font font-medium tracking-widest text-sm mb-3'>
+          CATEGORIES
+        </h2>
+        <nav class='list-none mb-10'>
+          <li>
+            <a class='anchor'>First Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Second Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Third Link</a>
+          </li>
+          <li>
+            <a class='anchor'>Fourth Link</a>
+          </li>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class:list={["border-t-[1px] border-surface-500/20", classList]}>
+    <div
+      class='container mx-auto flex flex-col xl:flex-row justify-between items-center gap-4'
+    >
+      <div class='flex items-center gap-4'>
+        <!-- <Icon name="skeleton" size={20} /> -->
+        <p class='text-xs opacity-60'>
+          Built by <a
+            class='underline'
+            href='https://bsky.app/profile/martinrojas.dev'
+            target='_blank'>Martin Rojas</a
+          > &copy; 2025.
+        </p>
+      </div>
+
+      <!-- Social -->
+      <nav class='flex items-center'>
+        <!-- {
+          socialLinks.get().map((l) => (
+            <a
+              class='btn hover:preset-tonal'
+              href={l.href}
+              target='_blank'
+              title={l.label}
+            >
+              <Icon name={l.icon} size={20} />
+            </a>
+          ))
+        } -->
+      </nav>
+    </div>
+  </div>
+</footer>
