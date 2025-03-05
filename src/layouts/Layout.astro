@@ -1,4 +1,5 @@
 ---
+import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 ---
 
@@ -9,10 +10,21 @@ import "../styles/global.css";
     <meta name='viewport' content='width=device-width' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>ReactATL</title>
   </head>
   <body>
-    <slot />
+    <div class='h-screen grid grid-rows-[auto_1fr_auto]'>
+      <!-- Header -->
+      <header
+        class='border-b-[1px] border-surface-500/20 bg-surface-50/90 dark:bg-surface-950/90 backdrop-blur w-full h-[70px] flex items-center'
+      >
+        (header)
+      </header>
+
+      <slot />
+      <!-- Footer -->
+      <Footer />
+    </div>
   </body>
 </html>
 
