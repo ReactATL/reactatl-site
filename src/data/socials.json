@@ -1,0 +1,26 @@
+[
+  {
+    "id": "meetup",
+    "href": "https://www.meetup.com/react-atl",
+    "label": "MeetUp",
+    "icon": "simple-icons:meetup"
+  },
+  {
+    "id": "discord",
+    "href": "https://discord.gg/6whjwYTRjj",
+    "label": "Discord",
+    "icon": "simple-icons:discord"
+  },
+  {
+    "id": "bluesky",
+    "href": "https://bsky.app/profile/reactatl.dev",
+    "label": "Bluesky",
+    "icon": "simple-icons:bluesky"
+  },
+  {
+    "id": "youtube",
+    "href": "https://www.youtube.com/channel/UCld-j-KjTocp3qH6eOkH2xQ",
+    "label": "YouTube",
+    "icon": "simple-icons:youtube"
+  }
+]
