@@ -1,0 +1,31 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<header
+  class='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
+>
+  <div class='container flex h-16 items-center justify-between'>
+    <div class='flex items-center gap-2'>
+      <Icon name='lucide:code' />
+      <span class='text-xl font-bold'>ReactATL</span>
+    </div>
+    <nav class='hidden md:flex gap-6'>
+      <a href='#events' class='text-sm font-medium hover:text-primary'>
+        Events
+      </a>
+      <a href='#previous' class='text-sm font-medium hover:text-primary'>
+        Previous Meetups
+      </a>
+      <a href='#partners' class='text-sm font-medium hover:text-primary'>
+        Partner Meetups
+      </a>
+      <a href='#about' class='text-sm font-medium hover:text-primary'>
+        About
+      </a>
+    </nav>
+    <button type='button' class='btn preset-tonal-primary'
+      >Join Community</button
+    >
+  </div>
+</header>
