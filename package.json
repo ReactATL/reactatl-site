@@ -20,6 +20,7 @@
     "tailwindcss": "^4.0.10"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "^1.2.30",
     "@iconify-json/simple-icons": "^1.2.27",
     "@skeletonlabs/skeleton": "3.0.0-next.12",
     "astro-icon": "^1.1.5"
