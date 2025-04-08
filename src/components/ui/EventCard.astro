@@ -1,79 +1,70 @@
 ---
 import Badge from "./Badge.astro";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
-const { title, subtitle, description } = Astro.props;
-const imgSrc =
-  "https://images.unsplash.com/photo-1463171515643-952cee54d42a?q=80&w=450&h=190&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+interface Props {
+  title: string;
+  subtitle?: string;
+  description: string;
+  date: string;
+  image?: string;
+  location?: string;
+  time?: string;
+}
+
+const { title, subtitle, description, date, image, location, time } =
+  Astro.props;
 ---
 
 <a
   href='#'
-  class='card preset-filled-surface-100-900 border-[1px] border-surface-200-800 card-hover divide-surface-200-800 block max-w-md divide-y overflow-hidden'
+  class='card preset-filled-surface-100-900 border-[1px] border-surface-200-800 card-hover divide-surface-200-800 block max-w-lg divide-y overflow-hidden p-4'
 >
-  {/* Header */}
-  <header>
-    <img
-      src={imgSrc}
-      class='aspect-[21/9] w-full grayscale hue-rotate-90'
-      alt='banner'
-    />
+  <header class='flex justify-end mb-4 pb-4'>
+    <Badge variant='primaryOutline'>
+      {date}
+    </Badge>
   </header>
-  {/* Article */}
-  <article class='space-y-4 p-4'>
-    <div>
-      <h2 class='h6'>{title}</h2>
-      <h3 class='h3'>{subtitle}</h3>
-    </div>
-    <p class='opacity-60'>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-      aspernatur provident eveniet eligendi cumque consequatur tempore sint nisi
-      sapiente. Iste beatae laboriosam iure molestias cum expedita architecto
-      itaque quae rem.
-    </p>
-  </article>
-  {/* Footer */}
-  <footer class='flex items-center justify-between gap-4 p-4'>
-    <small class='opacity-60'>By Alex</small>
-    <small class='opacity-60'>On {new Date().toLocaleDateString()}</small>
-  </footer>
-</a>
-
-<a
-  href='#'
-  class='card preset-filled-surface-100-900 border-[1px] border-surface-200-800 card-hover divide-surface-200-800 block max-w-xl divide-y overflow-hidden p-4'
->
-  <header>
-    <div class='flex items-center justify-between'>
-      <Badge>Featured</Badge>
-      <Badge variant='primaryOutline'>June 15</Badge>
-    </div>
-    <h2 class='mt-4'>{title}</h2>
-    <p>{description}</p>
-  </header>
-  <article>
-    <img
-      src='/placeholder.svg?height=200&width=400'
-      width={400}
-      height={200}
-      alt='React 19 Deep Dive'
-      class='rounded-md object-cover'
-    />
+  <article class='mb-4 pb-4'>
+    {
+      image ? (
+        <Image
+          src={image}
+          alt='React 19 Deep Dive'
+          class='rounded-md object-cover w-full'
+          width={450}
+          height={190}
+        />
+      ) : (
+        <div class='h-[190px] w-full bg-surface-200/20 rounded-md' />
+      )
+    }
     <div class='mt-4 space-y-2'>
-      <div class='flex items-center gap-2'>
-        <!-- <MapPin class='h-4 w-4 text-muted-foreground' /> -->
-        <span class='text-sm text-muted-foreground'>Atlanta Tech Village</span>
-      </div>
-      <div class='flex items-center gap-2'>
-        <!-- <Calendar class='h-4 w-4 text-muted-foreground' /> -->
-        <span class='text-sm text-muted-foreground'>6:30 PM - 8:30 PM</span>
-      </div>
-      <div class='flex items-center gap-2'>
-        <!-- <Users class='h-4 w-4 text-muted-foreground' /> -->
-        <span class='text-sm text-muted-foreground'>85 attending</span>
+      <h2 class='h3'>{title}</h2>
+      <h3 class='h6'>{subtitle}</h3>
+      <p class='opacity-60'>{description}</p>
+      <div>
+        {
+          location && (
+            <div class='flex items-center gap-2'>
+              <Icon name='lucide:map-pin' />
+              <span class='text-sm text-muted-foreground'>{location}</span>
+            </div>
+          )
+        }
+        {
+          time && (
+            <div class='flex items-center gap-2'>
+              <Icon name='lucide:calendar' />
+              <span class='text-sm text-muted-foreground'>{time}</span>
+            </div>
+          )
+        }
       </div>
     </div>
   </article>
-  <footer class='flex items-center justify-between gap-4 p-4'>
-    <button class='w-full'>Register Now</button>
+  <footer class='flex items-center justify-center gap-4 p-4'>
+    <button class='btn btn-lg preset-tonal-primary'>Register Now</button>
   </footer>
 </a>
