@@ -1,0 +1,31 @@
+---
+interface Props {
+  class?: string;
+  variant?:
+    | "default"
+    | "primary"
+    | "primaryTonal"
+    | "primaryOutline"
+    | "secondary"
+    | "secondaryTonal"
+    | "secondaryOutline";
+}
+
+const { class: className, variant, ...props } = Astro.props;
+const variants = {
+  default: "preset-filled",
+  primary: "preset-filled-primary-500",
+  primaryTonal: "preset-tonal-primary-500",
+  primaryOutline: "preset-outlined-primary-500",
+  secondary: "preset-filled-secondary-500",
+  secondaryTonal: "preset-tonal-secondary-500",
+  secondaryOutline: "preset-outlined-secondary-500",
+};
+---
+
+<span
+  class={`badge ${variant ? variants[variant] : variants.default} ${className}`}
+  {...props}
+>
+  <slot />
+</span>
