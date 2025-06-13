@@ -1,28 +1,26 @@
 ---
-import EventCard from "./ui/EventCard.astro";
 import Badge from "./ui/Badge.astro";
+import EventCard from "./ui/EventCard.astro";
 
 import { getCollection } from "astro:content";
 
 const allEvents = await getCollection("events");
 ---
 
-<section id='events' class='w-full py-12 md:py-24 lg:py-32'>
+<section id='previous' class='w-full py-12 md:py-24 lg:py-32 bg-muted'>
   <div class='container px-4 md:px-6'>
     <div
       class='flex flex-col items-center justify-center space-y-4 text-center'
     >
       <div class='space-y-2'>
-        <Badge class='mx-auto' variant='primaryOutline'>
-          What&apos;s Happening
-        </Badge>
+        <Badge class='mx-auto' variant='primaryOutline'> Look Back </Badge>
         <h2 class='text-3xl font-bold tracking-tighter sm:text-5xl'>
-          Upcoming Events
+          Previous Meetups
         </h2>
         <p
           class='max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed'
         >
-          Join us for our upcoming meetups, workshops, and special events.
+          Catch up on what you missed from our past events.
         </p>
       </div>
     </div>
@@ -30,7 +28,7 @@ const allEvents = await getCollection("events");
       {console.log(allEvents)}
       {
         allEvents.map((event) =>
-          event.data.upcoming ? (
+          !event.data.upcoming ? (
             <EventCard
               title={event.data.title}
               subtitle={event.data.subtitle}
@@ -44,12 +42,6 @@ const allEvents = await getCollection("events");
           ) : null
         )
       }
-    </div>
-    <div class='flex justify-center'>
-      <!-- <Button variant='outline' size='lg'>
-        View All Events
-        <ChevronRight class='ml-2 h-4 w-4' />
-      </Button> -->
     </div>
   </div>
 </section>

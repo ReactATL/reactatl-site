@@ -11,4 +11,20 @@ const socials = defineCollection({
   }),
 });
 
-export const collections = { socials };
+const events = defineCollection({
+  loader: file("./src/data/events.json"),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string().optional(),
+    description: z.string().optional(),
+    date: z.string(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    location: z.string().optional(),
+    time: z.string().optional(),
+    link: z.string(),
+    upcoming: z.boolean(),
+  }),
+});
+
+export const collections = { socials, events };

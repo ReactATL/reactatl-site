@@ -9,12 +9,24 @@ interface Props {
   description: string;
   date: string;
   image?: string;
+  imageAlt?: string;
   location?: string;
   time?: string;
+  link?: string;
+  upcoming?: boolean;
 }
 
-const { title, subtitle, description, date, image, location, time } =
-  Astro.props;
+const {
+  title,
+  subtitle,
+  description,
+  date,
+  image,
+  imageAlt,
+  location,
+  time,
+  link,
+} = Astro.props;
 ---
 
 <a
@@ -31,7 +43,7 @@ const { title, subtitle, description, date, image, location, time } =
       image ? (
         <Image
           src={image}
-          alt='React 19 Deep Dive'
+          alt={imageAlt || "Event Image"}
           class='rounded-md object-cover w-full'
           width={450}
           height={190}
