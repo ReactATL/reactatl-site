@@ -1,46 +1,43 @@
 ---
-import Badge from "./ui/Badge.astro";
-import EventCard from "./ui/EventCard.astro";
-
+import BentoEventCard from "./ui/BentoEventCard.astro";
+import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 
 const allEvents = await getCollection("events");
+const pastEvents = allEvents.filter((event) => !event.data.upcoming);
 ---
 
-<section id='previous' class='w-full py-12 md:py-24 lg:py-32 bg-muted'>
-  <div class='container px-4 md:px-6'>
-    <div
-      class='flex flex-col items-center justify-center space-y-4 text-center'
-    >
-      <div class='space-y-2'>
-        <Badge class='mx-auto' variant='primaryOutline'> Look Back </Badge>
-        <h2 class='text-3xl font-bold tracking-tighter sm:text-5xl'>
-          Previous Meetups
-        </h2>
-        <p
-          class='max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed'
-        >
-          Catch up on what you missed from our past events.
-        </p>
-      </div>
+<section id="previous" class="border-t border-border px-4 py-12 md:px-6 md:py-16">
+  <div class="mx-auto max-w-7xl">
+    <div class="mb-8 flex items-center justify-between">
+      <h2
+        class="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground"
+      >
+        Past Events
+      </h2>
+      <a
+        href="#"
+        class="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+      >
+        More Stories
+        <Icon name="lucide:arrow-right" class="h-4 w-4" />
+      </a>
     </div>
-    <div class='mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3'>
-      {console.log(allEvents)}
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
-        allEvents.map((event) =>
-          !event.data.upcoming ? (
-            <EventCard
-              title={event.data.title}
-              subtitle={event.data.subtitle}
-              description={event.data.description || ""}
-              link={event.data.link}
-              date={event.data.date}
-              image={event.data.image}
-              location={event.data.location}
-              time={event.data.time}
-            />
-          ) : null
-        )
+        pastEvents.map((event, index) => (
+          <BentoEventCard
+            title={event.data.title}
+            date={event.data.date}
+            time={event.data.time}
+            location={event.data.location}
+            tags={event.data.tags}
+            link={event.data.link}
+            variant={index === 0 ? "dark" : "light"}
+            size="small"
+          />
+        ))
       }
     </div>
   </div>

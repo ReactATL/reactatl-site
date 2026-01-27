@@ -24,6 +24,8 @@ const events = defineCollection({
     time: z.string().optional(),
     link: z.string(),
     upcoming: z.boolean(),
+    tags: z.array(z.string()).optional(),
+    featured: z.boolean().optional(),
   }),
 });
 

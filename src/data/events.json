@@ -1,24 +1,81 @@
 [
   {
     "id": 1,
-    "title": "Event 1",
-    "description": "Description for Event 1",
-    "date": "2023-10-01",
-    "location": "Location 1",
-    "image": "https://picsum.photos/450/190",
-    "link": "https://example.com/event1",
-    "time": "10:00 AM",
-    "upcoming": true
+    "title": "Node Project Configuration Management at Scale",
+    "description": "Learn best practices for managing Node.js configurations across large projects",
+    "date": "February 15, 2026",
+    "location": "Atlanta Tech Village",
+    "link": "https://www.meetup.com/react-atl",
+    "time": "6:30 PM EST",
+    "upcoming": true,
+    "tags": ["Node.js", "DevOps"],
+    "featured": true
   },
   {
     "id": 2,
-    "title": "Event 2",
-    "description": "Description for Event 2",
-    "date": "2023-10-01",
-    "location": "Location 1",
-    "image": "https://picsum.photos/450/190",
-    "link": "https://example.com/event1",
-    "time": "10:00 AM",
-    "upcoming": false
+    "title": "React Server Components Deep Dive",
+    "description": "Exploring the latest React 19 Server Components patterns",
+    "date": "March 1, 2026",
+    "location": "Switchyards Downtown",
+    "link": "https://www.meetup.com/react-atl",
+    "time": "6:30 PM EST",
+    "upcoming": true,
+    "tags": ["React 19", "Advanced"]
+  },
+  {
+    "id": 3,
+    "title": "Building Accessible React Applications",
+    "description": "Creating inclusive experiences with React and ARIA",
+    "date": "March 15, 2026",
+    "location": "Gathering Spot",
+    "link": "https://www.meetup.com/react-atl",
+    "time": "6:30 PM EST",
+    "upcoming": true,
+    "tags": ["A11y", "Best Practices"]
+  },
+  {
+    "id": 4,
+    "title": "Next.js 16 Launch Party",
+    "description": "Celebrating the latest Next.js release with demos and networking",
+    "date": "January 25, 2026",
+    "location": "The Commerce Club",
+    "link": "https://www.meetup.com/react-atl",
+    "time": "6:00 PM EST",
+    "upcoming": false,
+    "tags": ["Next.js", "Social"],
+    "featured": true
+  },
+  {
+    "id": 5,
+    "title": "React Performance Workshop",
+    "description": "Hands-on workshop for optimizing React applications",
+    "date": "January 11, 2026",
+    "location": "TechSquare Labs",
+    "link": "https://www.meetup.com/react-atl",
+    "time": "6:30 PM EST",
+    "upcoming": false,
+    "tags": ["Performance", "Workshop"]
+  },
+  {
+    "id": 6,
+    "title": "TypeScript + React Patterns",
+    "description": "Advanced TypeScript patterns for React development",
+    "date": "December 14, 2025",
+    "location": "Atlanta Tech Village",
+    "link": "https://www.meetup.com/react-atl",
+    "time": "6:30 PM EST",
+    "upcoming": false,
+    "tags": ["TypeScript", "Advanced"]
+  },
+  {
+    "id": 7,
+    "title": "React Native for Web Devs",
+    "description": "Introduction to React Native for web developers",
+    "date": "November 28, 2025",
+    "location": "Ponce City Market",
+    "link": "https://www.meetup.com/react-atl",
+    "time": "6:30 PM EST",
+    "upcoming": false,
+    "tags": ["React Native", "Mobile"]
   }
 ]

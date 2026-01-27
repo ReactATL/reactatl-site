@@ -1,77 +1,131 @@
 ---
-import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import reactLogo from "../assets/logo.jpeg";
 import { Icon } from "astro-icon/components";
 
-const { classList = "p-4" } = Astro.props;
 const allSocials = await getCollection("socials");
 ---
 
-<footer class='body-font'>
-  <div
-    class='container px-5 py-5 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col'
-  >
-    <div
-      class='w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10'
-    >
-      <Image src={reactLogo} alt='React ATL Logo' class='rounded-2xl' />
-    </div>
-    <div
-      class='flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first'
-    >
-      <div class='lg:w-1/4 md:w-1/2 w-full px-4'>
-        <h2 class='title-font font-medium tracking-widest text-sm mb-3'>
-          CATEGORIES
-        </h2>
-        <nav class='list-none mb-10'>
-          <li>
-            <a class='anchor'>First Link</a>
-          </li>
-          <li>
-            <a class='anchor'>Second Link</a>
-          </li>
-          <li>
-            <a class='anchor'>Third Link</a>
-          </li>
-          <li>
-            <a class='anchor'>Fourth Link</a>
-          </li>
-        </nav>
-      </div>
-    </div>
-  </div>
-  <div class:list={["border-t-[1px] border-surface-500/20", classList]}>
-    <div
-      class='container mx-auto flex flex-col xl:flex-row justify-between items-center gap-4'
-    >
-      <div class='flex items-center gap-4'>
-        <!-- <Icon name="skeleton" size={20} /> -->
-        <p class='text-xs opacity-60'>
-          Built by <a
-            class='underline'
-            href='https://bsky.app/profile/martinrojas.dev'
-            target='_blank'>Martin Rojas</a
-          > &copy; 2025.
+<footer class="border-t border-border px-4 py-12 md:px-6">
+  <div class="mx-auto max-w-7xl">
+    <div class="grid gap-8 md:grid-cols-4">
+      <!-- Brand Column -->
+      <div class="md:col-span-1">
+        <h3 class="mb-4 text-xl font-black uppercase tracking-tight">
+          reactATL
+        </h3>
+        <p class="text-sm text-muted-foreground">
+          Atlanta's React developer community. Connect, collaborate, and grow
+          with us.
+        </p>
+        <p
+          class="mt-4 text-xl text-foreground/70"
+          style="font-family: 'Caveat', cursive;"
+        >
+          Come out to learn and connect
         </p>
       </div>
 
-      <!-- Social -->
-      <nav class='flex items-center'>
-        {
-          allSocials &&
+      <!-- reactATL Links -->
+      <div>
+        <h4
+          class="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground"
+        >
+          reactATL
+        </h4>
+        <ul class="space-y-2">
+          <li>
+            <a href="#" class="text-sm text-foreground hover:underline">
+              Overview
+            </a>
+          </li>
+          <li>
+            <a href="#events" class="text-sm text-foreground hover:underline">
+              Events
+            </a>
+          </li>
+          <li>
+            <a href="#about" class="text-sm text-foreground hover:underline">
+              About
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div>
+        <h4
+          class="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground"
+        >
+          Categories
+        </h4>
+        <ul class="space-y-2">
+          <li>
+            <a href="#" class="text-sm text-foreground hover:underline">
+              React
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-sm text-foreground hover:underline">
+              Next.js
+            </a>
+          </li>
+          <li>
+            <a href="#" class="text-sm text-foreground hover:underline">
+              Node.js
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Connect -->
+      <div>
+        <h4
+          class="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground"
+        >
+          Connect
+        </h4>
+        <ul class="space-y-2">
+          {
             allSocials.map((social) => (
-              <a
-                class='btn hover:preset-tonal'
-                href={social.data.href}
-                target='_blank'
-                title={social.data.label}
-              >
-                <Icon name={social.data.icon} size={20} />
-              </a>
+              <li>
+                <a
+                  href={social.data.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm text-foreground hover:underline"
+                >
+                  {social.data.label}
+                </a>
+              </li>
             ))
-        }
-      </nav>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div
+      class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row"
+    >
+      <p class="text-sm text-muted-foreground">
+        &copy; {new Date().getFullYear()} reactATL. Built by
+        <a
+          href="https://bsky.app/profile/martinrojas.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline hover:text-foreground"
+        >
+          Martin Rojas
+        </a>.
+      </p>
+      <div class="flex items-center gap-2">
+        <div
+          class="flex h-8 w-8 items-center justify-center rounded-full bg-foreground"
+        >
+          <span class="text-sm font-bold text-background">R</span>
+        </div>
+        <span class="font-black uppercase tracking-tight">reactATL</span>
+      </div>
     </div>
   </div>
 </footer>

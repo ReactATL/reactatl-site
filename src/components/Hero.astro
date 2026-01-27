@@ -1,63 +1,77 @@
 ---
-import { Icon } from "astro-icon/components";
+const categories = [
+  "All Events",
+  "React",
+  "Next.js",
+  "Node.js",
+  "TypeScript",
+  "Workshops",
+];
 ---
 
-<section class='w-full py-12 md:py-24 lg:py-32 gradient-homepage-one'>
-  <div class='container px-4 md:px-6'>
+<section class="relative overflow-hidden px-4 pb-16 pt-8 md:px-6 md:pb-24 md:pt-16">
+  <!-- Gradient Blobs -->
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+    <!-- Blue/Teal blob top right -->
     <div
-      class='grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]'
+      class="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-cyan-500/40 via-blue-500/30 to-transparent blur-3xl"
     >
-      <div class='flex flex-col justify-center space-y-4'>
-        <div class='space-y-2'>
-          <span class='badge preset-tonal-primary'>
-            Atlanta's Premier React Community
-          </span>
-          <h1
-            class='text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none'
+    </div>
+    <!-- Orange/Peach blob center -->
+    <div
+      class="absolute left-1/4 top-1/3 h-[400px] w-[400px] rounded-full bg-gradient-to-br from-orange-400/30 via-amber-300/20 to-transparent blur-3xl"
+    >
+    </div>
+    <!-- Green blob bottom right -->
+    <div
+      class="absolute bottom-0 right-1/4 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-emerald-500/25 via-green-400/15 to-transparent blur-3xl"
+    >
+    </div>
+    <!-- Pink/Magenta blob left -->
+    <div
+      class="absolute -left-20 top-1/2 h-[350px] w-[350px] rounded-full bg-gradient-to-br from-pink-500/20 via-rose-400/15 to-transparent blur-3xl"
+    >
+    </div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl">
+    <!-- Presents Label -->
+    <p
+      class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-muted-foreground"
+    >
+      reactATL presents
+    </p>
+
+    <!-- Main Title - Bold Condensed -->
+    <h1
+      class="mb-6 max-w-4xl text-[clamp(2.5rem,8vw,6rem)] font-black uppercase leading-[0.9] tracking-tight text-foreground"
+    >
+      Connect, Collaborate, and Grow
+    </h1>
+
+    <!-- Script Accent -->
+    <p
+      class="mb-12 text-3xl text-foreground/80 md:text-4xl"
+      style="font-family: 'Caveat', cursive;"
+    >
+      Come out to learn and connect
+    </p>
+
+    <!-- Category Pills -->
+    <div class="flex flex-wrap gap-2">
+      {
+        categories.map((category, index) => (
+          <button
+            class={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+              index === 0
+                ? "border-foreground bg-foreground text-background"
+                : "border-border bg-transparent text-foreground hover:bg-foreground/10"
+            }`}
           >
-            Connect. Learn. Build.
-          </h1>
-          <p class='max-w-[600px] text-muted-foreground md:text-xl'>
-            Join Atlanta's most active React developer community. Meetups,
-            workshops, and networking events for developers of all skill levels.
-          </p>
-        </div>
-        <div class='flex flex-col gap-2 min-[400px]:flex-row'>
-          <button type='button' class='btn preset-filled-primary-500'>
-            Join Next Meetup
-            <Icon name='lucide:chevron-right' />
+            {category}
           </button>
-          <button type='button' class='btn preset-outlined-primary-500'>
-            View Schedule
-          </button>
-        </div>
-      </div>
-      <div class='flex items-center justify-center'>
-        <!-- <div
-          class='relative h-[350px] w-[350px] overflow-hidden rounded-lg border bg-background p-2 shadow-xl'
-        >
-          <img
-            src='/placeholder.svg?height=350&width=350'
-            width={350}
-            height={350}
-            alt='ReactATL Meetup'
-            class='rounded-md object-cover'
-          />
-          <div
-            class='absolute bottom-4 left-4 right-4 rounded-md bg-background/90 p-4 backdrop-blur-sm'
-          >
-            <div class='flex items-center gap-2'>
-              <Calendar class='h-4 w-4 text-primary' />
-              <span class='text-sm font-medium'>Next Meetup: June 15, 2025</span
-              >
-            </div>
-            <div class='mt-2 flex items-center gap-2'>
-              <MapPin class='h-4 w-4 text-primary' />
-              <span class='text-sm'>Atlanta Tech Village</span>
-            </div>
-          </div>
-        </div> -->
-      </div>
+        ))
+      }
     </div>
   </div>
 </section>

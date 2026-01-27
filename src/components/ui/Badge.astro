@@ -4,28 +4,24 @@ interface Props {
   variant?:
     | "default"
     | "primary"
-    | "primaryTonal"
-    | "primaryOutline"
+    | "outline"
     | "secondary"
-    | "secondaryTonal"
-    | "secondaryOutline";
+    | "muted";
 }
 
-const { class: className, variant, ...props } = Astro.props;
+const { class: className, variant = "default" } = Astro.props;
+
 const variants = {
-  default: "preset-filled",
-  primary: "preset-filled-primary-500",
-  primaryTonal: "preset-tonal-primary-500",
-  primaryOutline: "preset-outlined-primary-500",
-  secondary: "preset-filled-secondary-500",
-  secondaryTonal: "preset-tonal-secondary-500",
-  secondaryOutline: "preset-outlined-secondary-500",
+  default: "bg-foreground text-background",
+  primary: "bg-primary text-primary-foreground",
+  outline: "border border-border bg-transparent text-foreground",
+  secondary: "bg-secondary text-secondary-foreground",
+  muted: "bg-muted text-muted-foreground",
 };
+
+const baseClasses = "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wider";
 ---
 
-<span
-  class={`badge ${variant ? variants[variant] : variants.default} ${className}`}
-  {...props}
->
+<span class={`${baseClasses} ${variants[variant]} ${className || ""}`}>
   <slot />
 </span>
