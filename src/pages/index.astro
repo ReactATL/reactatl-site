@@ -1,16 +1,30 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import Upcoming from "../components/Upcoming.astro";
-import Previous from "../components/Previous.astro";
+import { FilterableEvents } from "../components/FilterableEvents";
 import Stats from "../components/Stats.astro";
+import { getCollection } from "astro:content";
+import type { Event } from "@/types/events";
+
+const allEvents = await getCollection("events");
+const events: Event[] = allEvents.map((event) => ({
+  id: event.id,
+  title: event.data.title,
+  description: event.data.description,
+  date: event.data.date,
+  time: event.data.time,
+  location: event.data.location,
+  link: event.data.link,
+  upcoming: event.data.upcoming,
+  tags: event.data.tags,
+  featured: event.data.featured,
+}));
 ---
 
 <Layout>
   <main class="bg-background">
     <Hero />
-    <Upcoming />
-    <Previous />
+    <FilterableEvents client:load events={events} />
     <Stats />
   </main>
 </Layout>
