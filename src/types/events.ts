@@ -14,21 +14,21 @@ export interface Event {
 export const CATEGORIES = [
   "All Events",
   "React",
-  "Next.js",
-  "Node.js",
-  "TypeScript",
-  "Workshops",
+  "Community",
+  "Leadership",
+  "AI",
+  "Career",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
 
 export const CATEGORY_TAG_MAP: Record<Category, string[]> = {
   "All Events": [],
-  React: ["React 19", "React Native"],
-  "Next.js": ["Next.js"],
-  "Node.js": ["Node.js", "DevOps"],
-  TypeScript: ["TypeScript"],
-  Workshops: ["Workshop", "Advanced", "Best Practices"],
+  React: ["React", "React Native", "Remix", "Platform Engineering"],
+  Community: ["Community", "Social", "Conference"],
+  Leadership: ["Leadership"],
+  AI: ["AI", "Tools"],
+  Career: ["Career", "Panel", "Workshop"],
 };
 
 export function matchesCategory(event: Event, category: Category): boolean {
@@ -37,8 +37,8 @@ export function matchesCategory(event: Event, category: Category): boolean {
   return (
     event.tags?.some((tag) =>
       categoryTags.some((catTag) =>
-        tag.toLowerCase().includes(catTag.toLowerCase())
-      )
+        tag.toLowerCase().includes(catTag.toLowerCase()),
+      ),
     ) ?? false
   );
 }
