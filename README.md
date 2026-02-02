@@ -2,12 +2,15 @@
 
 Community website for ReactATL - Atlanta's premier React developer meetup group.
 
+**Live site:** [reactatl.dev](https://reactatl.dev)
+
 ## Tech Stack
 
-- [Astro](https://astro.build) - Static site generator
-- [React](https://react.dev) - Interactive components
-- [Tailwind CSS](https://tailwindcss.com) - Utility-first styling
+- [Astro 5](https://astro.build) - Static site generator with islands architecture
+- [React 19](https://react.dev) - Interactive components via @astrojs/react
+- [Tailwind CSS 4](https://tailwindcss.com) - Utility-first styling via @tailwindcss/vite
 - [shadcn/ui](https://ui.shadcn.com) - Component patterns (CVA, clsx, tailwind-merge)
+- [astro-icon](https://github.com/natemoo-re/astro-icon) - Iconify integration (lucide, simple-icons)
 
 ## Getting Started
 
@@ -31,22 +34,43 @@ The dev server runs at [localhost:4321](http://localhost:4321).
 
 ```
 src/
-├── components/     # UI components (Header, Footer, Hero, BentoEventCard, etc.)
-├── data/           # JSON data (events, socials)
-├── layouts/        # Page layouts
-├── lib/            # Utility functions
-├── pages/          # Route pages
-└── styles/         # Global CSS with OKLCH color system
+├── components/
+│   ├── ui/
+│   │   ├── BentoEventCard.tsx   # Event card with light/dark variants
+│   │   ├── CategoryPill.tsx     # Filter button component
+│   │   └── button.tsx           # shadcn/ui button
+│   ├── About.astro              # About section with community description
+│   ├── FilterableEvents.tsx     # Interactive event grid with filtering
+│   ├── Header.astro             # Sticky navigation
+│   ├── Hero.astro               # Hero section with gradient blobs
+│   ├── Stats.astro              # Community statistics
+│   └── Footer.astro             # Footer with social links
+├── data/
+│   ├── events.json              # Event listings
+│   └── socials.json             # Social media links
+├── layouts/
+│   └── Layout.astro             # Base HTML layout with SEO
+├── lib/
+│   └── utils.ts                 # Utility functions (cn)
+├── pages/
+│   └── index.astro              # Homepage
+├── styles/
+│   └── global.css               # OKLCH color system
+├── types/
+│   └── events.ts                # Event types and category filtering
+└── content.config.ts            # Astro content collections schema
 ```
 
 ## Features
 
-- **Dark-first design** with OKLCH color system
-- **Bento grid layout** for event cards
-- **Glassmorphism effects** with backdrop blur
+- **Dark-first design** with OKLCH color system for perceptually uniform colors
+- **Interactive event filtering** by category (React, Community, Leadership, AI, Career)
+- **Bento grid layout** with featured large cards and smaller cards
+- **Glassmorphism effects** with backdrop blur on light variant cards
 - **Gradient blob backgrounds** for visual interest
-- **Responsive typography** with fluid sizing
-- **Content collections** for type-safe data management
+- **Responsive typography** with fluid sizing using clamp()
+- **Content collections** with Zod validation for type-safe data
+- **Full SEO** with Open Graph tags and JSON-LD structured data
 
 ## Content Management
 
@@ -64,12 +88,26 @@ Edit `src/data/events.json`:
   "date": "February 15, 2026",
   "time": "6:30 PM EST",
   "location": "Atlanta Tech Village",
-  "link": "https://www.meetup.com/react-atl",
+  "link": "https://www.meetup.com/react-atl/events/...",
   "upcoming": true,
   "tags": ["React", "Workshop"],
   "featured": true
 }
 ```
+
+**Fields:**
+- `upcoming` (boolean) - Shows in Upcoming or Past Events section
+- `tags` (array) - Category tags for filtering (React, Community, Leadership, AI, Career, Workshop, Panel, etc.)
+- `featured` (boolean, optional) - Displays as large card in the grid
+
+### Event Categories
+
+Events are filtered by tags mapped to these categories:
+- **React** - React, Remix, React Native, Mobile
+- **Community** - Community, Social, Wellness, Open Source
+- **Leadership** - Leadership, Security, Platform Engineering, Conference
+- **AI** - AI
+- **Career** - Career, Panel
 
 ## Links
 

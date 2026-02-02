@@ -24,29 +24,31 @@ This is a community website for ReactATL (Atlanta's React developer meetup) buil
 
 ```
 src/
-├── components/         # Astro and React components
-│   ├── ui/            # Reusable UI components
-│   │   ├── Badge.astro
-│   │   ├── BentoEventCard.astro
-│   │   └── button.tsx  # React component (shadcn)
-│   ├── Header.astro
-│   ├── Footer.astro
-│   ├── Hero.astro
-│   ├── Upcoming.astro
-│   ├── Previous.astro
-│   └── Stats.astro
-├── data/              # JSON data files loaded via content collections
-│   ├── events.json    # Event data with upcoming/past flag, tags
-│   └── socials.json   # Social media links
+├── components/
+│   ├── ui/
+│   │   ├── BentoEventCard.tsx  # Event card (React) - light/dark variants, small/medium/large sizes
+│   │   ├── CategoryPill.tsx    # Filter button (React) - active/inactive states
+│   │   └── button.tsx          # shadcn/ui button (React) - multiple variants
+│   ├── About.astro             # About section with community description
+│   ├── FilterableEvents.tsx    # Main interactive component - event grid with category filtering
+│   ├── Header.astro            # Sticky navigation with logo and CTA
+│   ├── Hero.astro              # Hero section with gradient blobs and Caveat font
+│   ├── Stats.astro             # Community statistics cards
+│   └── Footer.astro            # Footer with social links
+├── data/
+│   ├── events.json             # Event data (upcoming/past flag, tags, featured)
+│   └── socials.json            # Social media links (Meetup, Discord, Bluesky, YouTube)
 ├── layouts/
-│   └── Layout.astro   # Base HTML layout with Header/Footer
+│   └── Layout.astro            # Base HTML layout with Header/Footer, SEO meta tags
 ├── lib/
-│   └── utils.ts       # Utility functions (cn for class merging)
+│   └── utils.ts                # Utility functions (cn for class merging)
 ├── pages/
-│   └── index.astro    # Homepage
+│   └── index.astro             # Homepage - loads events and renders FilterableEvents
 ├── styles/
-│   └── global.css     # OKLCH color system + Tailwind config
-└── content.config.ts  # Astro content collections schema (Zod)
+│   └── global.css              # OKLCH color system + Tailwind theme config
+├── types/
+│   └── events.ts               # Event interface, categories, CATEGORY_TAG_MAP, matchesCategory()
+└── content.config.ts           # Astro content collections schema (Zod)
 ```
 
 ### Content Collections
@@ -56,8 +58,25 @@ Events and socials are managed via Astro's content collections with Zod schemas 
 **Events schema fields:**
 - `title`, `description`, `date`, `time`, `location`, `link` - Event details
 - `upcoming` (boolean) - Determines if shown in Upcoming or Past sections
-- `tags` (string array, optional) - Category tags displayed on cards
-- `featured` (boolean, optional) - For highlighting events
+- `tags` (string array, optional) - Category tags for filtering and display
+- `featured` (boolean, optional) - For highlighting events as large cards
+
+**Event Categories:**
+Categories are defined in `src/types/events.ts` with a tag mapping:
+- All Events, React, Community, Leadership, AI, Career
+- Tags like "Remix", "React Native" map to React category
+- Tags like "Social", "Wellness" map to Community category
+
+### Component Patterns
+
+**Astro Components (Static):**
+- Header, Hero, About, Stats, Footer - Server-rendered, no client JS
+- Use Astro's component syntax with frontmatter for data
+
+**React Components (Interactive):**
+- FilterableEvents - Main island, uses `client:load` directive
+- BentoEventCard, CategoryPill - Child components rendered within the island
+- Use standard React hooks (useState) for interactivity
 
 ### Styling Patterns
 
@@ -82,8 +101,8 @@ Events and socials are managed via Astro's content collections with Zod schemas 
 - `variant`: `"light"` (glassmorphism) | `"dark"` (inverted with gradient accents)
 - `size`: `"small"` | `"medium"` | `"large"`
 
-**Badge variants:**
-- `default`, `primary`, `outline`, `secondary`, `muted`
+**CategoryPill states:**
+- `isActive`: true (cyan background) | false (transparent with border)
 
 ### Icons
 
@@ -95,6 +114,7 @@ Use `@/` to import from `src/`:
 ```typescript
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import type { Event } from "@/types/events"
 ```
 
 ## Documentation Maintenance Standards
