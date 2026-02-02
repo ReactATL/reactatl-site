@@ -1,7 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import { FilterableEvents } from "../components/FilterableEvents";
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Hero.astro";
+import About from "@/components/About.astro";
+import { FilterableEvents } from "@/components/FilterableEvents";
 import Stats from "../components/Stats.astro";
 import { getCollection } from "astro:content";
 import type { Event } from "@/types/events";
@@ -22,9 +23,10 @@ const events: Event[] = allEvents.map((event) => ({
 ---
 
 <Layout>
-  <main class="bg-background">
+  <main class='bg-background'>
     <Hero />
     <FilterableEvents client:load events={events} />
+    <About />
     <Stats />
   </main>
 </Layout>

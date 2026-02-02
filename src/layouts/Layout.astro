@@ -13,81 +13,95 @@ interface Props {
 
 const {
   title = "ReactATL - Atlanta's React Developer Meetup",
-  description = "Join Atlanta's premier React developer community. Monthly meetups, workshops, and networking events for React enthusiasts of all skill levels.",
+  description = "Atlanta's community for developers building with React and modern web technologies. Monthly events on code, career growth, AI tools, leadership, and connecting with fellow devs.",
   image = "/og-image.png",
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
-  type = "website"
+  type = "website",
 } = Astro.props;
 
 const siteName = "ReactATL";
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang='en' class='dark'>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="ReactATL" />
-    <link rel="manifest" href="/favicon/site.webmanifest" />
-    <meta name="generator" content={Astro.generator} />
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link
+      rel='icon'
+      type='image/png'
+      href='/favicon/favicon-96x96.png'
+      sizes='96x96'
+    />
+    <link rel='icon' type='image/svg+xml' href='/favicon/favicon.svg' />
+    <link rel='shortcut icon' href='/favicon/favicon.ico' />
+    <link
+      rel='apple-touch-icon'
+      sizes='180x180'
+      href='/favicon/apple-touch-icon.png'
+    />
+    <meta name='apple-mobile-web-app-title' content='ReactATL' />
+    <link rel='manifest' href='/favicon/site.webmanifest' />
+    <meta name='generator' content={Astro.generator} />
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
-    <meta name="title" content={title} />
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
+    <meta name='title' content={title} />
+    <meta name='description' content={description} />
+    <link rel='canonical' href={canonicalURL} />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content={type} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.site)} />
-    <meta property="og:site_name" content={siteName} />
-    <meta property="og:locale" content="en_US" />
+    <meta property='og:type' content={type} />
+    <meta property='og:url' content={canonicalURL} />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:image' content={new URL(image, Astro.site)} />
+    <meta property='og:site_name' content={siteName} />
+    <meta property='og:locale' content='en_US' />
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalURL} />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:url' content={canonicalURL} />
+    <meta name='twitter:title' content={title} />
+    <meta name='twitter:description' content={description} />
+    <meta name='twitter:image' content={new URL(image, Astro.site)} />
 
     <!-- Theme & Browser UI -->
-    <meta name="theme-color" content="#000000" />
-    <meta name="color-scheme" content="dark" />
+    <meta name='theme-color' content='#000000' />
+    <meta name='color-scheme' content='dark' />
 
     <!-- Structured Data -->
-    <script type="application/ld+json" is:inline>
+    <script type='application/ld+json' is:inline>
       {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "ReactATL",
-        "description": "Atlanta's React Developer Meetup",
+        "description": "Atlanta's community for developers building with React and modern web technologies. Monthly events on code, career growth, AI tools, and leadership.",
         "url": "https://reactatl.dev",
         "logo": "https://reactatl.dev/reactatl-logo-sq.svg",
-        "sameAs": []
+        "sameAs": [
+          "https://www.meetup.com/react-atl",
+          "https://discord.gg/6whjwYTRjj",
+          "https://bsky.app/profile/reactatl.dev",
+          "https://www.youtube.com/@ReactATL"
+        ]
       }
     </script>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap"
-      rel="stylesheet"
+      href='https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap'
+      rel='stylesheet'
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;900&display=swap"
-      rel="stylesheet"
+      href='https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;900&display=swap'
+      rel='stylesheet'
     />
   </head>
-  <body class="min-h-screen bg-background text-foreground">
-    <div class="min-h-screen grid grid-rows-[auto_1fr_auto]">
+  <body class='min-h-screen bg-background text-foreground'>
+    <div class='min-h-screen grid grid-rows-[auto_1fr_auto]'>
       <Header />
       <slot />
       <Footer />
