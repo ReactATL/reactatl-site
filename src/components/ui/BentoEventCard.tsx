@@ -1,6 +1,16 @@
 import { cn } from "@/lib/utils";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 
+// Gradient-blob accents drawn from the Hero palette (cyan/blue, orange/amber,
+// emerald/green, pink/rose). Cards cycle through these so adjacent tiles differ;
+// blobs sit behind the content, replacing per-event photos on the tiles.
+const ACCENTS = [
+  { a: "from-cyan-500/30 via-blue-500/20", b: "from-emerald-500/25 via-green-400/15" },
+  { a: "from-orange-400/30 via-amber-300/20", b: "from-pink-500/25 via-rose-400/15" },
+  { a: "from-pink-500/30 via-rose-400/20", b: "from-cyan-500/25 via-blue-500/15" },
+  { a: "from-emerald-500/30 via-green-400/20", b: "from-orange-400/25 via-amber-300/15" },
+];
+
 interface BentoEventCardProps {
   title: string;
   date: string;
@@ -8,6 +18,7 @@ interface BentoEventCardProps {
   location?: string;
   tags?: string[];
   link?: string;
+  accent?: number;
   variant?: "light" | "dark";
   size?: "small" | "medium" | "large";
 }
@@ -19,12 +30,14 @@ export function BentoEventCard({
   location = "",
   tags = [],
   link = "#",
+  accent = 0,
   variant = "light",
   size = "medium",
 }: BentoEventCardProps) {
   const isDark = variant === "dark";
   const isLarge = size === "large";
   const isSmall = size === "small";
+  const accentColors = ACCENTS[accent % ACCENTS.length];
 
   const containerClasses = cn(
     "group relative flex h-full flex-col justify-between overflow-hidden rounded-lg border transition-all",
@@ -48,12 +61,20 @@ export function BentoEventCard({
 
   return (
     <a href={link} className={containerClasses}>
-      {isDark && (
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-gradient-to-br from-cyan-500/30 via-blue-500/20 to-transparent blur-2xl" />
-          <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-gradient-to-br from-orange-400/20 via-amber-300/10 to-transparent blur-2xl" />
-        </div>
-      )}
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className={cn(
+            "absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gradient-to-br to-transparent blur-3xl",
+            accentColors.a
+          )}
+        />
+        <div
+          className={cn(
+            "absolute -bottom-12 -left-12 h-44 w-44 rounded-full bg-gradient-to-br to-transparent blur-3xl",
+            accentColors.b
+          )}
+        />
+      </div>
 
       <div className="relative">
         <div className="mb-3 flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider">

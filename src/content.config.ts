@@ -1,7 +1,7 @@
 import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
 
-import { file } from "astro/loaders";
+import { file, glob } from "astro/loaders";
 
 const socials = defineCollection({
   loader: file("./src/data/socials.json"),
@@ -13,21 +13,29 @@ const socials = defineCollection({
 });
 
 const events = defineCollection({
-  loader: file("./src/data/events.json"),
-  schema: z.object({
-    title: z.string(),
-    subtitle: z.string().optional(),
-    description: z.string().optional(),
-    date: z.string(),
-    image: z.string().optional(),
-    imageAlt: z.string().optional(),
-    location: z.string().optional(),
-    time: z.string().optional(),
-    link: z.string(),
-    upcoming: z.boolean(),
-    tags: z.array(z.string()).optional(),
-    featured: z.boolean().optional(),
-  }),
+  loader: glob({ pattern: "*.md", base: "./src/content/events" }),
+  schema: ({ image }) =>
+    z
+      .object({
+        title: z.string(),
+        subtitle: z.string().optional(),
+        description: z.string().optional(),
+        date: z.coerce.date(),
+        endDate: z.coerce.date().optional(),
+        location: z.string().optional(),
+        meetupUrl: z.string().url().optional(),
+        lumaUrl: z.string().url().optional(),
+        primaryPlatform: z.enum(["meetup", "luma"]).optional(),
+        heroImage: image().optional(),
+        heroImageAlt: z.string().optional(),
+        tags: z.array(z.string()).default([]),
+        featured: z.boolean().default(false),
+        meetupId: z.string().optional(),
+        host: z.string().optional(),
+      })
+      .refine((d) => Boolean(d.meetupUrl || d.lumaUrl), {
+        message: "Event needs at least one of meetupUrl / lumaUrl",
+      }),
 });
 
 export const collections = { socials, events };

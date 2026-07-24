@@ -6,9 +6,10 @@ import { CATEGORIES, matchesCategory, type Event, type Category } from "@/types/
 
 interface FilterableEventsProps {
   events: Event[];
+  pastLimit?: number;
 }
 
-export function FilterableEvents({ events }: FilterableEventsProps) {
+export function FilterableEvents({ events, pastLimit }: FilterableEventsProps) {
   const [activeCategory, setActiveCategory] = useState<Category>("All Events");
 
   const filteredEvents = useMemo(() => {
@@ -16,12 +17,22 @@ export function FilterableEvents({ events }: FilterableEventsProps) {
   }, [events, activeCategory]);
 
   const upcomingEvents = useMemo(() => {
-    return filteredEvents.filter((event) => event.upcoming);
+    return filteredEvents
+      .filter((event) => event.upcoming)
+      .sort(
+        (a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTime(),
+      );
   }, [filteredEvents]);
 
   const pastEvents = useMemo(() => {
-    return filteredEvents.filter((event) => !event.upcoming);
+    return filteredEvents
+      .filter((event) => !event.upcoming)
+      .sort(
+        (a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime(),
+      );
   }, [filteredEvents]);
+
+  const visiblePast = pastLimit ? pastEvents.slice(0, pastLimit) : pastEvents;
 
   return (
     <>
@@ -49,7 +60,7 @@ export function FilterableEvents({ events }: FilterableEventsProps) {
               Upcoming Events
             </h2>
             <a
-              href="#"
+              href="/events"
               className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               View All
@@ -76,7 +87,8 @@ export function FilterableEvents({ events }: FilterableEventsProps) {
                     time={upcomingEvents[0].time}
                     location={upcomingEvents[0].location}
                     tags={upcomingEvents[0].tags}
-                    link={upcomingEvents[0].link}
+                    link={`/events/${upcomingEvents[0].slug}`}
+                    accent={0}
                     variant="dark"
                     size="large"
                   />
@@ -92,7 +104,8 @@ export function FilterableEvents({ events }: FilterableEventsProps) {
                     time={upcomingEvents[1].time}
                     location={upcomingEvents[1].location}
                     tags={upcomingEvents[1].tags}
-                    link={upcomingEvents[1].link}
+                    link={`/events/${upcomingEvents[1].slug}`}
+                    accent={1}
                     variant="light"
                     size="medium"
                   />
@@ -108,7 +121,8 @@ export function FilterableEvents({ events }: FilterableEventsProps) {
                     time={upcomingEvents[2].time}
                     location={upcomingEvents[2].location}
                     tags={upcomingEvents[2].tags}
-                    link={upcomingEvents[2].link}
+                    link={`/events/${upcomingEvents[2].slug}`}
+                    accent={2}
                     variant="light"
                     size="medium"
                   />
@@ -157,13 +171,15 @@ export function FilterableEvents({ events }: FilterableEventsProps) {
             <h2 className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
               Past Events
             </h2>
-            <a
-              href="#"
-              className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              More Stories
-              <ArrowRight className="h-4 w-4" />
-            </a>
+            {pastLimit && pastEvents.length > pastLimit ? (
+              <a
+                href="/events"
+                className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                View all {pastEvents.length} events
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            ) : null}
           </div>
 
           {pastEvents.length === 0 ? (
@@ -174,15 +190,16 @@ export function FilterableEvents({ events }: FilterableEventsProps) {
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {pastEvents.map((event, index) => (
+              {visiblePast.map((event, index) => (
                 <BentoEventCard
-                  key={event.id}
+                  key={event.slug}
                   title={event.title}
                   date={event.date}
                   time={event.time}
                   location={event.location}
                   tags={event.tags}
-                  link={event.link}
+                  link={`/events/${event.slug}`}
+                  accent={index}
                   variant={index === 0 ? "dark" : "light"}
                   size="small"
                 />

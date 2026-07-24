@@ -4,28 +4,15 @@ import Hero from "@/components/Hero.astro";
 import About from "@/components/About.astro";
 import { FilterableEvents } from "@/components/FilterableEvents";
 import Stats from "../components/Stats.astro";
-import { getCollection } from "astro:content";
-import type { Event } from "@/types/events";
+import { getEventList } from "@/lib/events";
 
-const allEvents = await getCollection("events");
-const events: Event[] = allEvents.map((event) => ({
-  id: event.id,
-  title: event.data.title,
-  description: event.data.description,
-  date: event.data.date,
-  time: event.data.time,
-  location: event.data.location,
-  link: event.data.link,
-  upcoming: event.data.upcoming,
-  tags: event.data.tags,
-  featured: event.data.featured,
-}));
+const events = await getEventList();
 ---
 
 <Layout>
   <main class='bg-background'>
     <Hero />
-    <FilterableEvents client:load events={events} />
+    <FilterableEvents client:load events={events} pastLimit={8} />
     <About />
     <Stats />
   </main>

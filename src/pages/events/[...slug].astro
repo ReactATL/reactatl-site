@@ -1,0 +1,163 @@
+---
+import { getCollection, render } from "astro:content";
+import { getImage, Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import Layout from "@/layouts/Layout.astro";
+import { formatEventDate } from "@/lib/dates";
+
+export async function getStaticPaths() {
+  const events = await getCollection("events");
+  return events.map((event) => ({ params: { slug: event.id }, props: { event } }));
+}
+
+const { event } = Astro.props;
+const { Content } = await render(event);
+const { dateLabel, timeLabel } = formatEventDate(event.data.date);
+// Social-share image: JPEG at the canonical 1200x630, cropped (not stretched).
+// JPEG (not WebP) for reliable rendering by Facebook / LinkedIn / iMessage crawlers.
+const ogImage = event.data.heroImage
+  ? (
+      await getImage({
+        src: event.data.heroImage,
+        width: 1200,
+        height: 630,
+        fit: "cover",
+        position: "center",
+        format: "jpeg",
+        quality: 80,
+      })
+    ).src
+  : undefined;
+
+const isUpcoming = event.data.date.getTime() >= Date.now();
+const verb = isUpcoming ? "RSVP on" : "View on";
+const primary =
+  event.data.primaryPlatform ?? (event.data.lumaUrl ? "luma" : "meetup");
+
+const rsvpLinks = [
+  { platform: "luma", url: event.data.lumaUrl, label: `${verb} Luma` },
+  { platform: "meetup", url: event.data.meetupUrl, label: `${verb} Meetup` },
+]
+  .filter((x) => x.url)
+  .sort((a, b) => (a.platform === primary ? -1 : b.platform === primary ? 1 : 0));
+
+const isOnline = (event.data.location ?? "Online") === "Online";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: event.data.title,
+  startDate: event.data.date.toISOString(),
+  ...(event.data.endDate ? { endDate: event.data.endDate.toISOString() } : {}),
+  eventAttendanceMode: isOnline
+    ? "https://schema.org/OnlineEventAttendanceMode"
+    : "https://schema.org/OfflineEventAttendanceMode",
+  location: isOnline
+    ? { "@type": "VirtualLocation", url: Astro.url.href }
+    : { "@type": "Place", name: event.data.location },
+  ...(ogImage ? { image: new URL(ogImage, Astro.site).href } : {}),
+  ...(event.data.description ? { description: event.data.description } : {}),
+  organizer: {
+    "@type": "Organization",
+    name: "ReactATL",
+    url: "https://reactatl.dev",
+  },
+  url: Astro.url.href,
+  sameAs: [event.data.meetupUrl, event.data.lumaUrl].filter(Boolean),
+};
+---
+
+<Layout
+  title={`${event.data.title} — ReactATL`}
+  description={event.data.description}
+  image={ogImage}
+  type="article"
+>
+  <main class="bg-background">
+    <article class="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
+      <a
+        href="/events"
+        class="mb-8 inline-flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <Icon name="lucide:arrow-left" class="h-4 w-4" /> All events
+      </a>
+
+      {
+        event.data.heroImage ? (
+          <Image
+            src={event.data.heroImage}
+            alt={event.data.heroImageAlt ?? event.data.title}
+            width={1200}
+            height={630}
+            class="mb-8 aspect-[1200/630] w-full rounded-lg object-cover"
+          />
+        ) : (
+          <div class="relative mb-8 flex aspect-[1200/630] w-full items-center justify-center overflow-hidden rounded-lg border border-border">
+            <div class="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-gradient-to-br from-cyan-500/30 via-blue-500/20 to-transparent blur-3xl" />
+            <div class="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-gradient-to-br from-orange-400/20 via-amber-300/10 to-transparent blur-3xl" />
+          </div>
+        )
+      }
+
+      <h1 class="text-balance text-3xl font-black uppercase leading-tight tracking-tight md:text-4xl">
+        {event.data.title}
+      </h1>
+
+      <div class="mt-4 flex flex-col gap-2 text-sm uppercase tracking-wider text-muted-foreground">
+        <div class="flex items-center gap-1.5">
+          <Icon name="lucide:calendar" class="h-4 w-4" />
+          <span>{dateLabel}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <Icon name="lucide:clock" class="h-4 w-4" />
+          <span>{timeLabel}</span>
+        </div>
+        {
+          event.data.location && (
+            <div class="flex items-center gap-1.5">
+              <Icon name="lucide:map-pin" class="h-4 w-4" />
+              <span>{event.data.location}</span>
+            </div>
+          )
+        }
+      </div>
+
+      {
+        event.data.tags && event.data.tags.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-2 text-xs uppercase tracking-wider text-muted-foreground">
+            {event.data.tags.map((tag) => (
+              <span class="rounded-full border border-border px-3 py-1">{tag}</span>
+            ))}
+          </div>
+        )
+      }
+
+      {
+        rsvpLinks.length > 0 && (
+          <div class="mt-8 flex flex-wrap gap-3">
+            {rsvpLinks.map((rsvp) => (
+              <a
+                href={rsvp.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class:list={[
+                  "rounded-full px-6 py-3 text-sm font-medium transition-colors",
+                  rsvp.platform === primary
+                    ? "bg-foreground text-background hover:bg-foreground/90"
+                    : "border border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background",
+                ]}
+              >
+                {rsvp.label}
+              </a>
+            ))}
+          </div>
+        )
+      }
+
+      <div class="event-content mt-10">
+        <Content />
+      </div>
+    </article>
+  </main>
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+</Layout>

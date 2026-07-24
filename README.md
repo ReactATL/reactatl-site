@@ -45,20 +45,30 @@ src/
 │   ├── Hero.astro               # Hero section with gradient blobs
 │   ├── Stats.astro              # Community statistics
 │   └── Footer.astro             # Footer with social links
+├── content/
+│   └── events/                  # One Markdown file per event (frontmatter + body)
+│       └── images/              # Co-located hero images
 ├── data/
-│   ├── events.json              # Event listings
 │   └── socials.json             # Social media links
 ├── layouts/
 │   └── Layout.astro             # Base HTML layout with SEO
 ├── lib/
-│   └── utils.ts                 # Utility functions (cn)
+│   ├── utils.ts                 # cn() class merging
+│   ├── dates.ts                 # ET date/time label formatting
+│   └── events.ts                # getEventList() collection helper
 ├── pages/
-│   └── index.astro              # Homepage
+│   ├── index.astro              # Homepage
+│   └── events/                  # Archive (index.astro) + detail ([...slug].astro)
 ├── styles/
-│   └── global.css               # OKLCH color system
+│   └── global.css               # OKLCH color system + article styles
 ├── types/
 │   └── events.ts                # Event types and category filtering
 └── content.config.ts            # Astro content collections schema
+```
+
+```
+scripts/
+└── import-meetup.mjs            # Imports event content + images from Meetup
 ```
 
 ## Features
@@ -74,31 +84,39 @@ src/
 
 ## Content Management
 
-Events and social links are managed via JSON files in `src/data/` and loaded through Astro's content collections.
+Social links live in `src/data/socials.json`. Event content lives in `src/content/events/*.md` — one Markdown file per event (typed frontmatter + a rich Markdown body) — loaded through Astro's content collections.
 
 ### Adding Events
 
-Edit `src/data/events.json`:
+Events are imported from Meetup rather than hand-written. Run:
 
-```json
-{
-  "id": 1,
-  "title": "Event Title",
-  "description": "Event description",
-  "date": "February 15, 2026",
-  "time": "6:30 PM EST",
-  "location": "Atlanta Tech Village",
-  "link": "https://www.meetup.com/react-atl/events/...",
-  "upcoming": true,
-  "tags": ["React", "Workshop"],
-  "featured": true
-}
+```bash
+pnpm import:events                                   # refresh all events from the seed list
+node scripts/import-meetup.mjs <meetupUrl> [--luma=<lumaUrl>]   # add a single new event
 ```
 
-**Fields:**
-- `upcoming` (boolean) - Shows in Upcoming or Past Events section
-- `tags` (array) - Category tags for filtering (React, Community, Leadership, AI, Career, Workshop, Panel, etc.)
-- `featured` (boolean, optional) - Displays as large card in the grid
+The importer fetches the Meetup event's description, date, venue, host, and hero image and writes `src/content/events/<slug>.md` plus `images/<slug>.jpeg`. Curated frontmatter (tags, featured, subtitle, primaryPlatform) is preserved across re-runs.
+
+Frontmatter shape:
+
+```yaml
+---
+title: "Event Title"
+description: "Short excerpt for OG/meta"
+date: 2026-02-15T18:30:00-05:00
+location: "Atlanta Tech Village"
+meetupUrl: "https://www.meetup.com/react-atl/events/..."   # meetupUrl and/or lumaUrl (>=1 required)
+lumaUrl: "https://luma.com/..."
+primaryPlatform: luma        # optional; which RSVP button is filled (default: Luma if present)
+heroImage: "./images/event-title.jpeg"
+tags: ["React", "Workshop"]
+featured: true
+---
+
+Full Markdown description goes here.
+```
+
+`upcoming` and display date/time are derived at build time (not stored). Each event renders at `/events/<slug>` with up to two RSVP buttons.
 
 ### Event Categories
 

@@ -1,11 +1,12 @@
 export interface Event {
-  id: string;
+  slug: string;
   title: string;
+  subtitle?: string;
   description?: string;
+  dateISO: string;
   date: string;
-  time?: string;
+  time: string;
   location?: string;
-  link: string;
   upcoming: boolean;
   tags?: string[];
   featured?: boolean;

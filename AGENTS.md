@@ -5,9 +5,10 @@ This file provides guidance to AI coding assistants when working with code in th
 ## Build Commands
 
 ```bash
-pnpm dev      # Start dev server at localhost:4321
-pnpm build    # Build for production to ./dist/
-pnpm preview  # Preview production build locally
+pnpm dev            # Start dev server at localhost:4321
+pnpm build          # Build for production to ./dist/
+pnpm preview        # Preview production build locally
+pnpm import:events  # Fetch Meetup content → src/content/events/*.md + images
 ```
 
 ## Architecture
@@ -26,40 +27,56 @@ This is a community website for ReactATL (Atlanta's React developer meetup) buil
 src/
 ├── components/
 │   ├── ui/
-│   │   ├── BentoEventCard.tsx  # Event card (React) - light/dark variants, small/medium/large sizes
+│   │   ├── BentoEventCard.tsx  # Event card (React) - light/dark variants, small/medium/large sizes, cycling gradient-blob accents
 │   │   ├── CategoryPill.tsx    # Filter button (React) - active/inactive states
 │   │   └── button.tsx          # shadcn/ui button (React) - multiple variants
 │   ├── About.astro             # About section with community description
-│   ├── FilterableEvents.tsx    # Main interactive component - event grid with category filtering
+│   ├── FilterableEvents.tsx    # Main interactive component - event grid with category filtering, optional pastLimit cap
 │   ├── Header.astro            # Sticky navigation with logo and CTA
 │   ├── Hero.astro              # Hero section with gradient blobs and Caveat font
 │   ├── Stats.astro             # Community statistics cards
 │   └── Footer.astro            # Footer with social links
+├── content/
+│   └── events/                 # One Markdown file per event (rich body + frontmatter)
+│       ├── <slug>.md           # Imported from Meetup by scripts/import-meetup.mjs
+│       └── images/<slug>.jpeg  # Co-located hero images (build-optimized via Astro image())
 ├── data/
-│   ├── events.json             # Event data (upcoming/past flag, tags, featured)
 │   └── socials.json            # Social media links (Meetup, Discord, Bluesky, YouTube)
 ├── layouts/
 │   └── Layout.astro            # Base HTML layout with Header/Footer, SEO meta tags
 ├── lib/
-│   └── utils.ts                # Utility functions (cn for class merging)
+│   ├── utils.ts                # cn() class merging
+│   ├── dates.ts                # formatEventDate() → ET date/time labels
+│   └── events.ts               # getEventList() → collection mapped to serializable Event[] w/ optimized images
 ├── pages/
-│   └── index.astro             # Homepage - loads events and renders FilterableEvents
+│   ├── index.astro             # Homepage - getEventList(), FilterableEvents capped at 8 past
+│   └── events/
+│       ├── index.astro         # Full archive - all events, no cap
+│       └── [...slug].astro     # Event detail page - description, image, JSON-LD, dual RSVP buttons
 ├── styles/
-│   └── global.css              # OKLCH color system + Tailwind theme config
+│   └── global.css              # OKLCH color system + Tailwind theme + .event-content article styles
 ├── types/
 │   └── events.ts               # Event interface, categories, CATEGORY_TAG_MAP, matchesCategory()
 └── content.config.ts           # Astro content collections schema (Zod)
+
+scripts/
+└── import-meetup.mjs           # Meetup __NEXT_DATA__ importer → writes event .md files + hero images
 ```
 
 ### Content Collections
 
-Events and socials are managed via Astro's content collections with Zod schemas defined in `src/content.config.ts`. Access data using `getCollection("events")` or `getCollection("socials")`.
+The `socials` collection is loaded from `src/data/socials.json` via `file()`. The `events` collection is loaded from `src/content/events/*.md` via `glob()` — each event is a Markdown file: typed frontmatter + a rich Markdown body (the full description). Schemas live in `src/content.config.ts`. Access via `getCollection("events")` / `getCollection("socials")`; prefer the `getEventList()` helper (`src/lib/events.ts`) for the serializable, image-optimized, sorted `Event[]` consumed by the UI.
 
-**Events schema fields:**
-- `title`, `description`, `date`, `time`, `location`, `link` - Event details
-- `upcoming` (boolean) - Determines if shown in Upcoming or Past sections
-- `tags` (string array, optional) - Category tags for filtering and display
-- `featured` (boolean, optional) - For highlighting events as large cards
+**Events are owned in-repo, not fetched at build time.** `pnpm import:events` (`scripts/import-meetup.mjs`) fetches each Meetup event's embedded `__NEXT_DATA__` and writes/refreshes the `.md` files + co-located hero images. Re-runs preserve curation (tags/featured/subtitle/primaryPlatform) and stable slugs via the frontmatter `meetupId`. Add a new event with `node scripts/import-meetup.mjs <meetupUrl> [--luma=<lumaUrl>]`.
+
+**Events frontmatter fields:**
+- `title`, `description` (short excerpt for OG/meta), `date` (ISO), `endDate` (optional), `location` - Event details; full body is the Markdown after the frontmatter
+- `meetupUrl` / `lumaUrl` - RSVP links; **at least one required** (Zod refine). `primaryPlatform` (`"meetup"|"luma"`, optional) picks the filled RSVP button; default is Luma when present, else Meetup
+- `heroImage` (co-located `./images/<slug>.jpeg` via `image()`), `heroImageAlt` - optional hero
+- `tags` (string array), `featured` (boolean) - filtering/highlighting
+- `meetupId`, `host`, `subtitle` - source id / organizer / optional subtitle
+
+`upcoming` and display date/time labels are **derived** in `getEventList()` (not stored): `upcoming = date >= now`, labels via `formatEventDate()` in ET.
 
 **Event Categories:**
 Categories are defined in `src/types/events.ts` with a tag mapping:
@@ -77,6 +94,11 @@ Categories are defined in `src/types/events.ts` with a tag mapping:
 - FilterableEvents - Main island, uses `client:load` directive
 - BentoEventCard, CategoryPill - Child components rendered within the island
 - Use standard React hooks (useState) for interactivity
+
+**Routes:**
+- `/` (`index.astro`) - homepage, past events capped at 8 with a "View all" link
+- `/events` (`events/index.astro`) - full archive, all events, category filter, no cap
+- `/events/<slug>` (`events/[...slug].astro`) - detail page: hero image, rendered Markdown body (`.event-content`), meta, up to two RSVP buttons (Luma/Meetup), and schema.org `Event` JSON-LD. All event cards link here (internal), never straight to Meetup/Luma.
 
 ### Styling Patterns
 
@@ -98,8 +120,9 @@ Categories are defined in `src/types/events.ts` with a tag mapping:
 - Uppercase headings with tight tracking: `uppercase tracking-tight font-black`
 
 **BentoEventCard variants:**
-- `variant`: `"light"` (glassmorphism) | `"dark"` (inverted with gradient accents)
+- `variant`: `"light"` (glassmorphism) | `"dark"` (inverted, white bg)
 - `size`: `"small"` | `"medium"` | `"large"`
+- `accent` (number): selects a two-blob gradient backdrop from the Hero palette (cyan/blue, orange/amber, emerald/green, pink/rose); cards cycle through variants (`accent % 4`) so adjacent tiles differ. Tiles carry no per-event photo — hero images are used only on the detail page.
 
 **CategoryPill states:**
 - `isActive`: true (cyan background) | false (transparent with border)
