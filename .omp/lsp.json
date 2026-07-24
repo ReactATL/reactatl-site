@@ -1,0 +1,21 @@
+{
+  "servers": {
+    "typescript-language-server": {
+      "command": "typescript-language-server",
+      "args": ["--stdio"],
+      "fileTypes": [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"],
+      "rootMarkers": ["tsconfig.json", "package.json", ".git"]
+    },
+    "astro": {
+      "command": "astro-ls",
+      "args": ["--stdio"],
+      "fileTypes": [".astro"],
+      "rootMarkers": ["astro.config.mjs", "astro.config.ts", "package.json", ".git"],
+      "initOptions": {
+        "typescript": {
+          "tsdk": "node_modules/typescript/lib"
+        }
+      }
+    }
+  }
+}
