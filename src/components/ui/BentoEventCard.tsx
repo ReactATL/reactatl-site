@@ -64,13 +64,13 @@ export function BentoEventCard({
       <div className="pointer-events-none absolute inset-0">
         <div
           className={cn(
-            "absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gradient-to-br to-transparent blur-3xl",
+            "absolute -right-16 -top-16 h-56 w-56 rounded-full bg-linear-to-br to-transparent blur-3xl",
             accentColors.a
           )}
         />
         <div
           className={cn(
-            "absolute -bottom-12 -left-12 h-44 w-44 rounded-full bg-gradient-to-br to-transparent blur-3xl",
+            "absolute -bottom-12 -left-12 h-44 w-44 rounded-full bg-linear-to-br to-transparent blur-3xl",
             accentColors.b
           )}
         />

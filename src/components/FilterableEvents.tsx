@@ -79,8 +79,8 @@ export function FilterableEvents({ events, pastLimit }: FilterableEventsProps) {
               {/* Featured Large Card */}
               {upcomingEvents[0] && (
                 <div className="relative overflow-hidden md:col-span-1 md:row-span-2">
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-emerald-500/20" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-br from-cyan-500/20 via-blue-500/10 to-emerald-500/20" />
+                  <div className="absolute inset-0 bg-linear-to-t from-background via-background/80 to-transparent" />
                   <BentoEventCard
                     title={upcomingEvents[0].title}
                     date={upcomingEvents[0].date}
@@ -133,7 +133,7 @@ export function FilterableEvents({ events, pastLimit }: FilterableEventsProps) {
               <div className="relative overflow-hidden md:col-span-2">
                 <div className="flex h-full flex-col justify-between rounded-lg border border-border bg-card/50 p-6 backdrop-blur-sm">
                   {/* Subtle gradient accent */}
-                  <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-orange-400/20 via-amber-300/10 to-transparent blur-2xl" />
+                  <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-linear-to-br from-orange-400/20 via-amber-300/10 to-transparent blur-2xl" />
 
                   <div className="relative">
                     <p className="mb-2 text-sm uppercase tracking-wider text-muted-foreground">
