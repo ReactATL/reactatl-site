@@ -240,5 +240,16 @@
     "link": "https://www.meetup.com/react-atl/events/315028044/",
     "upcoming": false,
     "tags": ["Social", "Community", "AI"]
+  },
+  {
+    "id": 25,
+    "title": "Meet Atlanta Tech Week & RenderATL Speakers!",
+    "description": "A joint meetup with RenderATL and Atlanta's developer communities featuring four speakers sharing the pivots, detours, and lessons that rarely make it onto a conference slide—followed by a panel on where the industry is heading. Speakers include Kelsey Hightower, Sarah Drasner, Angie Jones, and Bree Hall.",
+    "date": "August 10, 2026",
+    "time": "6:30 PM EDT",
+    "location": "CallRail, 100 Peachtree St NW #2700, Atlanta, GA",
+    "link": "https://luma.com/16nfy3e5",
+    "upcoming": true,
+    "tags": ["Career", "Community", "Panel"]
   }
 ]
