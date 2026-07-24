@@ -198,7 +198,7 @@
     "tags": ["Community", "Talks"]
   },
   {
-    "id": 1,
+    "id": 21,
     "title": "Engineering with AI: Tools & Workflows for Next Gen Development Workshop",
     "description": "Join this immersive workshop to learn how modern engineering teams are integrating AI into everyday workflows. Through hands-on sessions, you'll explore proven frameworks and practical AI playbooks that make code reviews faster, documentation smoother, and planning more strategic.",
     "date": "February 4, 2026",
@@ -209,7 +209,7 @@
     "tags": ["AI", "Workshop"]
   },
   {
-    "id": 2,
+    "id": 22,
     "title": "2026 Starts Here: Career Panel + Job Search Deep-Dive with Jerome Hardaway",
     "description": "ReactATL is teaming up with REFACTR.TECH, ATL JavaScript, and Modern Web for our first event of the year—going all-in on the topic of getting hired in 2026's job market.",
     "date": "February 17, 2026",
