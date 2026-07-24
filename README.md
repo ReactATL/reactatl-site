@@ -6,7 +6,7 @@ Community website for ReactATL - Atlanta's premier React developer meetup group.
 
 ## Tech Stack
 
-- [Astro 5](https://astro.build) - Static site generator with islands architecture
+- [Astro 7](https://astro.build) - Static site generator with islands architecture
 - [React 19](https://react.dev) - Interactive components via @astrojs/react
 - [Tailwind CSS 4](https://tailwindcss.com) - Utility-first styling via @tailwindcss/vite
 - [shadcn/ui](https://ui.shadcn.com) - Component patterns (CVA, clsx, tailwind-merge)
@@ -121,15 +121,15 @@ Full Markdown description goes here.
 ### Event Categories
 
 Events are filtered by tags mapped to these categories:
-- **React** - React, Remix, React Native, Mobile
-- **Community** - Community, Social, Wellness, Open Source
-- **Leadership** - Leadership, Security, Platform Engineering, Conference
-- **AI** - AI
-- **Career** - Career, Panel
+- **React** - React, React Native, Remix, Platform Engineering
+- **Community** - Community, Social, Conference
+- **Leadership** - Leadership
+- **AI** - AI, Tools
+- **Career** - Career, Panel, Workshop
 
 ## Links
 
 - [Meetup](https://www.meetup.com/react-atl)
 - [Discord](https://discord.gg/6whjwYTRjj)
 - [Bluesky](https://bsky.app/profile/reactatl.dev)
-- [YouTube](https://www.youtube.com/channel/UCld-j-KjTocp3qH6eOkH2xQ)
+- [YouTube](https://www.youtube.com/@ReactATL)
