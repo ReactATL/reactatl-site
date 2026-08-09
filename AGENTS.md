@@ -41,6 +41,7 @@ For details: `docs/SYSTEM_DESIGN.md`.
 Rules that apply across the repo:
 
 - **Path alias** — import from `src/` with `@/` (e.g. `@/lib/utils`, `@/types/events`).
+- **Event slugs** — new event files are named `YYYY-MM-<kebab-title>.md` (month taken from the event's own `date`), with the hero image on the same stem. The filename is the public URL, so **never rename an existing event file** — pre-convention events keep their bare `<kebab-title>` slugs. `pnpm import:events` does not add the prefix yet; apply it by hand after importing.
 - **Class merging** — use `cn()` from `@/lib/utils`; component variants follow shadcn/ui + CVA patterns (`clsx`, `tailwind-merge`).
 - **Styling** — dark-first OKLCH design (`class="dark"` on `<html>`); use theme classes (`bg-background`, `text-foreground`, `text-muted-foreground`, `border-border`) defined in `src/styles/global.css`, not raw colors.
 - **Icons** — `<Icon name="lucide:…" />` / `simple-icons:…` from `astro-icon/components` in `.astro`; `lucide-react` in React islands.
@@ -52,8 +53,8 @@ Rules that apply across the repo:
 
 Start here: `docs/SYSTEM_DESIGN.md`. Full map: `docs/index.md`.
 
-| When working on... | Read first |
-|---|---|
+| When working on...                         | Read first       |
+| ------------------------------------------ | ---------------- |
 | UI, components, styling, visual/UX changes | `docs/DESIGN.md` |
 
 ## Project Policies

@@ -1,5 +1,25 @@
 # Change Log
 
+## 2026-08-09 — Event slug convention: `YYYY-MM-<kebab-title>`
+
+Adopted a dated filename convention for **new** event content, at maintainer request.
+
+- `SYSTEM_DESIGN.md` §5 gained a **Slug convention** bullet: new events are
+  `YYYY-MM-<kebab-title>.md` (month from the event's own `date`), hero image on the same
+  stem. Existing events keep bare `<kebab-title>` slugs and are **not** renamed — the
+  filename is the public `/events/<slug>` URL and those are linked from Meetup/Luma.
+  Mixed slug styles in the directory are expected.
+- `SYSTEM_DESIGN.md` §6 gained a **Known gap** bullet: `scripts/import-meetup.mjs`
+  derives slugs as `uniqueSlug(kebab(title), slugs)` (`:257`, `:312`) and does not apply
+  the prefix, so imported new events need a manual rename. Script left unchanged.
+- Added a matching Conventions rule to `AGENTS.md`.
+- Corrected drift: §5 said "25 event files + 25 images", actual is 26 of each; image
+  pattern generalized from `images/<slug>.jpeg` to `.<ext>` (a `.png` hero now exists).
+- The Sept 2026 code jam (`code-jam-build-something-gloriously-useless.md`, committed on
+  `feat/code-jam-september-2026`) predates this decision and was **not** renamed.
+
+Docs-freshness: head=2c04a2f date=2026-08-09 pass=maintain
+
 ## 2026-07-24 — Added DESIGN.md design system
 
 Authored `docs/DESIGN.md` (DESIGN.md format: token frontmatter + prose) capturing the
