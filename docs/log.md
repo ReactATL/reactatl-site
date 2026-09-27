@@ -1,5 +1,17 @@
 # Change Log
 
+## 2026-09-27 — Cloudflare Static Assets deployment setup
+
+Added Cloudflare deployment configuration using Cloudflare Workers Static Assets (no SSR adapter needed for pure static SSG):
+
+- Added `wrangler.jsonc` pointing `assets.directory` to `./dist` with `not_found_handling: "404-page"`.
+- Added `pnpm deploy` script (`astro build && wrangler deploy`) in `package.json`.
+- Added `.wrangler/` to `.gitignore`.
+- Enabled `workerd: true` in `pnpm-workspace.yaml`.
+- Updated `SYSTEM_DESIGN.md` §8.
+
+Docs-freshness: head=local date=2026-09-27 pass=maintain
+
 ## 2026-08-09 — Event slug convention: `YYYY-MM-<kebab-title>`
 
 Adopted a dated filename convention for **new** event content, at maintainer request.

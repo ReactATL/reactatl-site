@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "deploy": "astro build && wrangler deploy",
     "astro": "astro",
     "import:events": "node scripts/import-meetup.mjs"
   },
@@ -29,6 +30,7 @@
     "@iconify-json/lucide": "^1.2.118",
     "@iconify-json/simple-icons": "^1.2.91",
     "astro-icon": "^1.1.5",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.141.0"
   }
 }

@@ -2,7 +2,7 @@
 type: System Design
 title: System Design — ReactATL Website
 description: Static Astro site for Atlanta's React meetup; in-repo event content, category-filtered bento grid, SEO detail pages.
-timestamp: 2026-07-24T00:00:00Z
+timestamp: 2026-09-27T00:00:00Z
 status: implemented
 maintainer: ReactATL organizers
 tags: [architecture, evergreen]
@@ -201,11 +201,11 @@ erDiagram
 flowchart LR
   DEV["astro dev @ :4321"] --> SRC["src/ + content/"]
   SRC -->|"astro build"| DIST["./dist static assets"]
-  DIST --> HOST["static host → reactatl.dev"]
+  DIST -->|"wrangler deploy"| CF["Cloudflare Workers (Static Assets)"]
 ```
 
-- **Environments** — local dev (`pnpm dev`, `localhost:4321`); production is a static bundle served at `reactatl.dev`. No staging defined in-repo; no deploy config committed (host/CI is external — see §14).
-- **Install / run** — `pnpm install`; `pnpm dev` / `pnpm build` / `pnpm preview`.
+- **Environments** — local dev (`pnpm dev`, `localhost:4321`); production static bundle hosted on Cloudflare via Workers Static Assets (`wrangler.jsonc`, `reactatl.dev`).
+- **Install / run** — `pnpm install`; `pnpm dev` / `pnpm build` / `pnpm preview` / `pnpm deploy`.
 - **Scaling** — static files behind a CDN; scaling is the host's concern. No server to scale.
 - **Monitoring** — N/A in-repo.
 
